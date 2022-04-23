@@ -5,9 +5,6 @@ let path = "https://AironH.pythonanywhere.com"
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     path = "http://localhost:8000"
 }
-
-console.log(path)
-
 class TodoDataService {
     getAll(token) {
         axios.defaults.headers.common["Authorization"] = "Token " + token;
