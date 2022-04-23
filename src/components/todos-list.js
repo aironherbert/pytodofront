@@ -9,13 +9,15 @@ const TodosList = props => {
     const [todos, setTodos] = useState([]);
 
     const retrieveTodos = useCallback(() => {
-        TodoDataService.getAll(props.token)
-            .then(response => {
-                setTodos(response.data);
-            })
-            .catch(e => {
-                console.log(e);
-            });
+        if (props.token) {
+            TodoDataService.getAll(props.token)
+                .then(response => {
+                    setTodos(response.data);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
     }, [props.token])
 
     useEffect(() => {
@@ -43,6 +45,7 @@ const TodosList = props => {
             })
     }
 
+    if (!props.loading && !props.token) return props.history.push("/login")
 
     return (
         <Container>

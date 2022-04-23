@@ -53,16 +53,13 @@ const AddTodo = props => {
                 });
         }
     }
+
+
+    if (!props.token) return props.history.push("/login")
+
     return (
         <Container>
-            {submitted ? (
-                <div>
-                    <h4>Todo submitted successfully</h4>
-                    <Link to={"/todos/"}>
-                        Back to Todos
-                    </Link>
-                </div>
-            ) : (
+            {submitted ? props.history.push("/todos") : (
                 <Form>
                     <Form.Group className="mb-3">
                         <Form.Label>{editing ? "Edit" : "Create"} Todo</Form.Label>

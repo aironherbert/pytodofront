@@ -20,6 +20,7 @@ const Signup = props => {
     return (
         <Container>
             <Form>
+                <Form.Label style={{ width: "100%", textAlign: "center" }}>Sign up</Form.Label>
                 <Form.Group className="mb-3">
                     <Form.Label>Username</Form.Label>
                     <Form.Control

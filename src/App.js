@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link, Redirect, Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import AddTodo from './components/add-todo';
@@ -17,6 +17,7 @@ function App() {
 
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   async function login(user = null) {
@@ -80,8 +81,9 @@ function App() {
           <Route exact path={["/", "/todos"]} render={(props) => <TodosList {...props} token={token} />} />
           <Route path="/todos/create" render={(props) => <AddTodo {...props} token={token} />} />
           <Route path="/todos/:id/" render={(props) => <AddTodo {...props} token={token} />} />
-          <Route path="/login" render={(props) => <Login {...props} login={login} />} />
+          <Route path="/login" render={(props) => <Login {...props} token={token} login={login} />} />
           <Route path="/signup" render={(props) => <Signup {...props} signup={signup} />} />
+          <Route path="" render={() => <Redirect to={"/todos"} />} />
         </Switch>
       </div>
       <footer className="text-center text-lg-start

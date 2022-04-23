@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
@@ -16,11 +16,20 @@ const Login = props => {
     }
     const login = () => {
         props.login({ username: username, password: password });
-        props.history.push('/todos');
     }
+
+    console.log(props.token)
+
+    useEffect(() => {
+        if (props.token) {
+            props.history.push('/todos');
+        }
+    }, [props.history, props.token])
+
     return (
         <Container>
             <Form>
+                <Form.Label style={{ width: "100%", textAlign: "center" }}>Log in</Form.Label>
                 <Form.Group className="mb-3">
                     <Form.Label>Username</Form.Label>
                     <Form.Control
