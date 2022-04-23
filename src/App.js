@@ -76,19 +76,11 @@ function App() {
         </div>
       </Navbar>
       <Switch>
-        <Route exact path={["/", "/todos"]}>
-          <TodosList token={token} />
-        </Route>
-        <Route path="/todos/create">
-          <AddTodo token={token} />
-        </Route>
+        <Route exact path={["/", "/todos"]} render={(props) => <TodosList {...props} token={token} />} />
+        <Route path="/todos/create" render={(props) => <AddTodo {...props} token={token} />} />
         <Route path="/todos/:id/" render={(props) => <AddTodo {...props} token={token} />} />
-        <Route path="/login" >
-          <Login login={login} />
-        </Route>
-        <Route path="/signup">
-          <Signup signup={signup} />
-        </Route>
+        <Route path="/login" render={(props) => <Login {...props} login={login} />} />
+        <Route path="/signup" render={(props) => <Signup {...props} signup={signup} />} />
       </Switch>
       <footer className="text-center text-lg-start
 bg-light text-muted mt-4">

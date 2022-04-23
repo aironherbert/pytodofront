@@ -1,30 +1,39 @@
 import axios from 'axios';
+
+let path = "https://AironH.pythonanywhere.com"
+
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    path = "http://localhost:8000"
+}
+
+console.log(path)
+
 class TodoDataService {
     getAll(token) {
         axios.defaults.headers.common["Authorization"] = "Token " + token;
-        return axios.get('https://AironH.pythonanywhere.com/api/todos/');
+        return axios.get(`${path}/api/todos/`);
     }
     createTodo(data, token) {
         axios.defaults.headers.common["Authorization"] = "Token " + token;
-        return axios.post("https://AironH.pythonanywhere.com/api/todos/", data);
+        return axios.post(`${path}/api/todos/`, data);
     }
     updateTodo(id, data, token) {
         axios.defaults.headers.common["Authorization"] = "Token " + token;
-        return axios.put(`https://AironH.pythonanywhere.com/api/todos/${id}`, data);
+        return axios.put(`${path}/api/todos/${id}`, data);
     }
     deleteTodo(id, token) {
         axios.defaults.headers.common["Authorization"] = "Token " + token;
-        return axios.delete(`https://AironH.pythonanywhere.com/api/todos/${id}`);
+        return axios.delete(`${path}/api/todos/${id}`);
     }
     completeTodo(id, token) {
         axios.defaults.headers.common["Authorization"] = "Token " + token;
-        return axios.put(`https://AironH.pythonanywhere.com/api/todos/${id}/complete`);
+        return axios.put(`${path}/api/todos/${id}/complete`);
     }
     login(data) {
-        return axios.post("https://AironH.pythonanywhere.com/api/login/", data);
+        return axios.post(`${path}/api/login/`, data);
     }
     signup(data) {
-        return axios.post("https://AironH.pythonanywhere.com/api/signup/", data);
+        return axios.post(`${path}/api/signup/`, data);
     }
 }
 export default new TodoDataService();

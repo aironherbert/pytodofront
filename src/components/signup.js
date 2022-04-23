@@ -15,7 +15,7 @@ const Signup = props => {
     }
     const signup = () => {
         props.signup({ username: username, password: password });
-        props.history.push('/');
+        props.history.push('/todos');
     }
     return (
         <Container>
