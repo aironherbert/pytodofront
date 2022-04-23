@@ -49,51 +49,45 @@ const TodosList = props => {
 
     return (
         <Container>
-            {props.token == null || props.token === "" ? (
-                <Alert variant='warning'>
-                    You are not logged in. Please <Link to={"/login"}>login</Link> to see your todos.
-                </Alert>
-            ) : (
-                <div>
-                    <Link to={"/todos/create"}>
-                        <Button variant="outline-info" className="mb-3">
-                            Add To-do
-                        </Button>
-                    </Link>
-                    {todos.map((todo) => {
-                        return (
-                            <Card key={todo.id} className="mb-3">
-                                <Card.Body>
-                                    <div className={`${todo.completed ? "text-decoration-line-through" : ""}`}>
-                                        <Card.Title>{todo.title}</Card.Title>
-                                        <Card.Text><b>Memo:</b> {todo.memo}</Card.Text>
-                                        <Card.Text>Date created: {(new Date(Date.parse(todo.created))).toLocaleString("pt-br")}</Card.Text>
-                                    </div>
-                                    {!todo.completed && (
-                                        <Link to={{
-                                            pathname: "/todos/" + todo.id,
-                                            state: {
-                                                currentTodo: todo
-                                            }
-                                        }}>
-                                            <Button variant="outline-info" className="me-2">
-                                                Edit
-                                            </Button>
-                                        </Link>
-                                    )}
-                                    <Button variant="outline-danger" className="me-2" onClick={() => deleteTodo(todo.id)} >
-                                        Delete
-                                    </Button>
-                                    <Button variant="outline-success" onClick={() => completeTodo(todo.id)}>
-                                        Complete
-                                    </Button>
-                                </Card.Body>
-                            </Card>
-                        )
-                    })}
-                </div>
-            )
-            }
+
+            <div>
+                <Link to={"/todos/create"}>
+                    <Button variant="outline-info" className="mb-3">
+                        Add To-do
+                    </Button>
+                </Link>
+                {todos.map((todo) => {
+                    return (
+                        <Card key={todo.id} className="mb-3">
+                            <Card.Body>
+                                <div className={`${todo.completed ? "text-decoration-line-through" : ""}`}>
+                                    <Card.Title>{todo.title}</Card.Title>
+                                    <Card.Text><b>Memo:</b> {todo.memo}</Card.Text>
+                                    <Card.Text>Date created: {(new Date(Date.parse(todo.created))).toLocaleString("pt-br")}</Card.Text>
+                                </div>
+                                {!todo.completed && (
+                                    <Link to={{
+                                        pathname: "/todos/" + todo.id,
+                                        state: {
+                                            currentTodo: todo
+                                        }
+                                    }}>
+                                        <Button variant="outline-info" className="me-2">
+                                            Edit
+                                        </Button>
+                                    </Link>
+                                )}
+                                <Button variant="outline-danger" className="me-2" onClick={() => deleteTodo(todo.id)} >
+                                    Delete
+                                </Button>
+                                <Button variant="outline-success" onClick={() => completeTodo(todo.id)}>
+                                    Complete
+                                </Button>
+                            </Card.Body>
+                        </Card>
+                    )
+                })}
+            </div>
         </Container >
     );
 }

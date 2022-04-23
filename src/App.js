@@ -60,7 +60,7 @@ function App() {
     <div className="App">
       <Navbar bg="primary" variant="dark">
         <div className="container-fluid">
-          <Navbar.Brand>TodosApp</Navbar.Brand>
+          <Navbar.Brand>Todo APP</Navbar.Brand>
           <Nav className="me-auto">
             <Container>
               <Link className="nav-link" to={"/todos"}>Todos</Link>
@@ -76,13 +76,13 @@ function App() {
           </Nav>
         </div>
       </Navbar>
-      <div style={{ minHeight: "70vh", padding: "10px" }}>
+      <div style={{ minHeight: "72vh", padding: "10px" }}>
         <Switch>
           <Route exact path={["/", "/todos"]} render={(props) => <TodosList {...props} token={token} />} />
           <Route path="/todos/create" render={(props) => <AddTodo {...props} token={token} />} />
           <Route path="/todos/:id/" render={(props) => <AddTodo {...props} token={token} />} />
           <Route path="/login" render={(props) => <Login {...props} token={token} login={login} />} />
-          <Route path="/signup" render={(props) => <Signup {...props} signup={signup} />} />
+          <Route path="/signup" render={(props) => <Signup {...props} token={token} signup={signup} />} />
           <Route path="" render={() => <Redirect to={"/todos"} />} />
         </Switch>
       </div>

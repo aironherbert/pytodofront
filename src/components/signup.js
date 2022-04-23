@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
@@ -17,6 +17,13 @@ const Signup = props => {
         props.signup({ username: username, password: password });
         props.history.push('/todos');
     }
+
+    useEffect(() => {
+        if (props.token) {
+            props.history.push('/todos');
+        }
+    }, [props.history, props.token])
+
     return (
         <Container>
             <Form>
@@ -40,7 +47,7 @@ const Signup = props => {
                     />
                 </Form.Group>
                 <Button variant="primary" onClick={signup}>
-                    Sign Up
+                    Create user
                 </Button>
             </Form>
         </Container>

@@ -18,8 +18,6 @@ const Login = props => {
         props.login({ username: username, password: password });
     }
 
-    console.log(props.token)
-
     useEffect(() => {
         if (props.token) {
             props.history.push('/todos');
