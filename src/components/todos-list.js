@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import TodoDataService from '../services/todos';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
@@ -7,10 +7,8 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 const TodosList = props => {
     const [todos, setTodos] = useState([]);
-    useEffect(() => {
-        retrieveTodos();
-    }, [props.token]);
-    const retrieveTodos = () => {
+
+    const retrieveTodos = useCallback(() => {
         TodoDataService.getAll(props.token)
             .then(response => {
                 setTodos(response.data);
@@ -18,7 +16,11 @@ const TodosList = props => {
             .catch(e => {
                 console.log(e);
             });
-    }
+    }, [props.token])
+
+    useEffect(() => {
+        retrieveTodos();
+    }, [props.token, retrieveTodos]);
 
     const deleteTodo = (todoId) => {
         TodoDataService.deleteTodo(todoId, props.token)
