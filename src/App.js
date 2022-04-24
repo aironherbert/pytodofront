@@ -84,7 +84,7 @@ function App() {
           <Route path="/todos/:id/" render={(props) => <AddTodo {...props} token={token} />} />
           <Route path="/login" render={(props) => <Login {...props} token={token} login={login} />} />
           <Route path="/signup" render={(props) => <Signup {...props} signup={signup} />} />
-          <Redirect from="*" to={"/"} />
+          <Route render={() => <Redirect from="*" to="/" />} />
         </Switch>
       </div>
       <footer className="text-center text-lg-start
