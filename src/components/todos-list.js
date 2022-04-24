@@ -25,7 +25,7 @@ const TodosList = props => {
 
     useEffect(() => {
         retrieveTodos();
-    }, []);
+    }, [retrieveTodos]);
 
     const deleteTodo = (todoId) => {
         TodoDataService.deleteTodo(todoId, props.token)
