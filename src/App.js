@@ -83,8 +83,8 @@ function App() {
           <Route path="/todos/create" render={(props) => <AddTodo {...props} token={token} />} />
           <Route path="/todos/:id/" render={(props) => <AddTodo {...props} token={token} />} />
           <Route path="/login" render={(props) => <Login {...props} token={token} login={login} />} />
-          <Route path="/signup" render={(props) => <Signup {...props} token={token} signup={signup} />} />
-          <Route path="" render={() => <Redirect to={"/todos"} />} />
+          <Route path="/signup" render={(props) => <Signup {...props} signup={signup} />} />
+          <Route path="/" render={() => <Redirect to={"/"} />} />
         </Switch>
       </div>
       <footer className="text-center text-lg-start
