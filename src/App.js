@@ -12,11 +12,12 @@ import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Navbar'
 import { useState } from 'react';
 import TodoDataService from './services/todos';
+import { capitalizeInitials } from './utils/format-string';
 
 function App() {
 
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
+  const [user, setUser] = useState(localStorage.getItem('user'));
+  const [token, setToken] = useState(localStorage.getItem('token'));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -64,8 +65,8 @@ function App() {
           <Nav className="me-auto">
             <Container>
               <Link className="nav-link" to={"/todos"}>Todos</Link>
-              {user ? (
-                <Link className="nav-link" onClick={logout}>Logout ({user})</Link>
+              {token ? (
+                <Link className="nav-link" onClick={logout} to={""}>Logout ({capitalizeInitials(user)})</Link>
               ) : (
                 <>
                   <Link className="nav-link" to={"/login"}>Login</Link>

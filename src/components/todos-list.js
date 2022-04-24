@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-import Alert from 'react-bootstrap/Alert';
 const TodosList = props => {
     const [todos, setTodos] = useState([]);
 
@@ -38,7 +37,6 @@ const TodosList = props => {
         TodoDataService.completeTodo(todoId, props.token)
             .then(response => {
                 retrieveTodos();
-                console.log("completeTodo", todoId);
             })
             .catch(e => {
                 console.log(e);
