@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+import { Spinner } from 'react-bootstrap';
 const TodosList = props => {
     const [todos, setTodos] = useState([]);
 
@@ -47,14 +48,19 @@ const TodosList = props => {
 
     return (
         <Container>
-
             <div>
                 <Link to={"/todos/create"}>
                     <Button variant="outline-info" className="mb-3">
                         Add To-do
                     </Button>
                 </Link>
-                {todos.map((todo) => {
+                {props.loading ? (
+                    <div style={{ width: "100%", textAlign: "center" }}>
+                        <Spinner animation="border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                    </div>
+                ) : todos.map((todo) => {
                     return (
                         <Card key={todo.id} className="mb-3">
                             <Card.Body>
