@@ -7,22 +7,25 @@ import Button from 'react-bootstrap/Button';
 import { Spinner } from 'react-bootstrap';
 const TodosList = props => {
     const [todos, setTodos] = useState([]);
+    const [loading, setLoading] = useState(false);
+    console.log(loading)
 
-    const retrieveTodos = useCallback(() => {
-        if (props.token) {
-            TodoDataService.getAll(props.token)
-                .then(response => {
-                    setTodos(response.data);
-                })
-                .catch(e => {
-                    console.log(e);
-                });
-        }
+    const retrieveTodos = useCallback(async () => {
+        setLoading(true)
+        props.token && await TodoDataService.getAll(props.token)
+            .then(response => {
+                setTodos(response.data);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+        setLoading(false)
     }, [props.token])
+
 
     useEffect(() => {
         retrieveTodos();
-    }, [props.token, retrieveTodos]);
+    }, []);
 
     const deleteTodo = (todoId) => {
         TodoDataService.deleteTodo(todoId, props.token)
@@ -54,7 +57,7 @@ const TodosList = props => {
                         Add To-do
                     </Button>
                 </Link>
-                {props.loading ? (
+                {loading ? (
                     <div style={{ width: "100%", textAlign: "center" }}>
                         <Spinner animation="border" role="status">
                             <span className="visually-hidden">Loading...</span>

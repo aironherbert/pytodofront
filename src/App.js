@@ -18,12 +18,10 @@ function App() {
 
   const [user, setUser] = useState(localStorage.getItem('user'));
   const [token, setToken] = useState(localStorage.getItem('token'));
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   async function login(user = null) {
-    setLoading(true)
-    TodoDataService.login(user)
+    await TodoDataService.login(user)
       .then(response => {
         setToken(response.data.token);
         setUser(user.username);
@@ -35,7 +33,6 @@ function App() {
         console.log('login', e);
         setError(e.toString());
       });
-    setLoading(false)
   }
 
   async function logout() {
@@ -81,7 +78,7 @@ function App() {
       </Navbar>
       <div style={{ minHeight: "72vh", padding: "10px" }}>
         <Switch>
-          <Route exact path={["/", "/todos"]} render={(props) => <TodosList {...props} loading={loading} token={token} />} />
+          <Route exact path={["/", "/todos"]} render={(props) => <TodosList {...props} token={token} />} />
           <Route path="/todos/create" render={(props) => <AddTodo {...props} token={token} />} />
           <Route path="/todos/:id/" render={(props) => <AddTodo {...props} token={token} />} />
           <Route path="/login" render={(props) => <Login {...props} token={token} login={login} />} />
