@@ -1,36 +1,19 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
 import TodoDataService from '../services/todos';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import { Spinner } from 'react-bootstrap';
+import { useQuery } from 'react-query'
 const TodosList = props => {
-    const [todos, setTodos] = useState([]);
-    const [loading, setLoading] = useState(false);
-    console.log(loading)
 
-    const retrieveTodos = useCallback(async () => {
-        setLoading(true)
-        props.token && await TodoDataService.getAll(props.token)
-            .then(response => {
-                setTodos(response.data);
-            })
-            .catch(e => {
-                console.log(e);
-            });
-        setLoading(false)
-    }, [props.token])
-
-
-    useEffect(() => {
-        retrieveTodos();
-    }, [retrieveTodos]);
+    const { data, isSuccess, refetch } = useQuery('todos', () => TodoDataService.getAll(props.token), { enabled: !!props.token, });
 
     const deleteTodo = (todoId) => {
         TodoDataService.deleteTodo(todoId, props.token)
             .then(response => {
-                retrieveTodos();
+                refetch();
             })
             .catch(e => {
                 console.log(e);
@@ -40,13 +23,12 @@ const TodosList = props => {
     const completeTodo = (todoId) => {
         TodoDataService.completeTodo(todoId, props.token)
             .then(response => {
-                retrieveTodos();
+                refetch();
             })
             .catch(e => {
                 console.log(e);
             })
     }
-
     if (!props.loading && !props.token) return props.history.push("/login")
 
     return (
@@ -57,13 +39,13 @@ const TodosList = props => {
                         Add To-do
                     </Button>
                 </Link>
-                {loading ? (
+                {!isSuccess ? (
                     <div style={{ width: "100%", textAlign: "center" }}>
                         <Spinner animation="border" role="status">
                             <span className="visually-hidden">Loading...</span>
                         </Spinner>
                     </div>
-                ) : todos.map((todo) => {
+                ) : data.data.map((todo) => {
                     return (
                         <Card key={todo.id} className="mb-3">
                             <Card.Body>
@@ -87,7 +69,9 @@ const TodosList = props => {
                                 <Button variant="outline-danger" className="me-2" onClick={() => deleteTodo(todo.id)} >
                                     Delete
                                 </Button>
-                                <Button variant="outline-success" onClick={() => completeTodo(todo.id)}>
+                                <Button variant="outline-success" onClick={() => {
+                                    completeTodo(todo.id)
+                                }}>
                                     Complete
                                 </Button>
                             </Card.Body>

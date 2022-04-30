@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
@@ -15,13 +15,15 @@ const Login = props => {
         setPassword(password);
     }
     const login = () => {
-        props.login({ username: username, password: password });
+        return props.login({ username: username, password: password });
     }
 
     const token = localStorage.getItem('token');
-    if (token) {
-        props.history.push('/todos')
-    }
+    useEffect(() => {
+        if (token || props.token) {
+            props.history.push('/todos')
+        }
+    }, [props.history, props.token, token])
 
     return (
         <Container>
